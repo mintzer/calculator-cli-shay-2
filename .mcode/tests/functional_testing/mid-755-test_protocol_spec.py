@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-02-18T20:31:53.581075+00:00
+Generated at: 2026-02-18T20:46:32.757994+00:00
 Project: calculator-cli-shay-2
 Milestone: 755
 """
@@ -228,7 +228,7 @@ TEST_CASES = json.loads(r'''[
 ]''')
 
 # CLI binary/entry point
-CLI_COMMAND = "calc-go"
+CLI_COMMAND = "calc"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
