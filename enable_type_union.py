@@ -19,9 +19,13 @@ class _FutureAnnotationsLoader:
         return None
 
     def exec_module(self, module):
+        # Ensure standard module attributes are set
+        module.__file__ = self._origin
+        module.__loader__ = self
+        if not hasattr(module, '__path__'):
+            module.__path__ = []
+
         source = self._source_bytes.decode('utf-8', errors='replace')
-        # Inject future annotations after any encoding declarations / shebang
-        # but it must be the first statement (after docstrings)
         source = "from __future__ import annotations\n" + source
         code = compile(source, self._origin, 'exec')
         exec(code, module.__dict__)
@@ -72,8 +76,10 @@ class _FutureAnnotationsFinder:
                 fullname,
                 loader,
                 origin=origin,
+                is_package=spec.submodule_search_locations is not None,
             )
             new_spec.submodule_search_locations = spec.submodule_search_locations
+            new_spec.has_location = True
             return new_spec
         except Exception:
             return None
