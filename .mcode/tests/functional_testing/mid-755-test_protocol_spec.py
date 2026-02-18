@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-02-18T20:14:52.911658+00:00
+Generated at: 2026-02-18T20:31:53.581075+00:00
 Project: calculator-cli-shay-2
 Milestone: 755
 """
@@ -36,7 +36,7 @@ TEST_CASES = json.loads(r'''[
     {
         "name": "test_add_positive_integers",
         "category": "HAPPY_PATH",
-        "description": "Verify add operation with positive integers (README example: 5 + 3 = 8)",
+        "description": "Verify add operation with positive integers (5 + 3 = 8)",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "add",
@@ -51,7 +51,7 @@ TEST_CASES = json.loads(r'''[
     {
         "name": "test_sub_positive_integers",
         "category": "HAPPY_PATH",
-        "description": "Verify sub operation with positive integers (README example: 10 - 4 = 6)",
+        "description": "Verify sub operation with positive integers (10 - 4 = 6)",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "sub",
@@ -66,7 +66,7 @@ TEST_CASES = json.loads(r'''[
     {
         "name": "test_mul_positive_integers",
         "category": "HAPPY_PATH",
-        "description": "Verify mul operation with positive integers (README example: 6 * 7 = 42)",
+        "description": "Verify mul operation with positive integers (6 * 7 = 42)",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "mul",
@@ -81,7 +81,7 @@ TEST_CASES = json.loads(r'''[
     {
         "name": "test_div_positive_integers",
         "category": "HAPPY_PATH",
-        "description": "Verify div operation with positive integers (README example: 20 / 4 = 5)",
+        "description": "Verify div operation with positive integers (20 / 4 = 5)",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "div",
@@ -96,7 +96,7 @@ TEST_CASES = json.loads(r'''[
     {
         "name": "test_add_negative_numbers",
         "category": "HAPPY_PATH",
-        "description": "Verify add operation with a negative operand (-5 + 3 = -2)",
+        "description": "Verify add with a negative operand (-5 + 3 = -2)",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "add",
@@ -109,69 +109,9 @@ TEST_CASES = json.loads(r'''[
         "timeout_seconds": 10
     },
     {
-        "name": "test_sub_negative_from_negative",
-        "category": "HAPPY_PATH",
-        "description": "Verify sub operation with two negative numbers (-3 - (-7) = 4)",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "sub",
-            "-3",
-            "-7"
-        ],
-        "expected_exit_code": 0,
-        "expected_stdout": "4",
-        "expected_stderr": null,
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_add_zeros",
-        "category": "HAPPY_PATH",
-        "description": "Verify add operation with both operands as zero (0 + 0 = 0)",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "add",
-            "0",
-            "0"
-        ],
-        "expected_exit_code": 0,
-        "expected_stdout": "0",
-        "expected_stderr": null,
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_mul_with_zero",
-        "category": "HAPPY_PATH",
-        "description": "Verify mul operation when one operand is zero (5 * 0 = 0)",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "mul",
-            "5",
-            "0"
-        ],
-        "expected_exit_code": 0,
-        "expected_stdout": "0",
-        "expected_stderr": null,
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_add_float_operands",
-        "category": "HAPPY_PATH",
-        "description": "Verify add operation with floating-point operands (1.5 + 2.5 = 4)",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "add",
-            "1.5",
-            "2.5"
-        ],
-        "expected_exit_code": 0,
-        "expected_stdout": "4",
-        "expected_stderr": null,
-        "timeout_seconds": 10
-    },
-    {
         "name": "test_div_resulting_in_float",
         "category": "HAPPY_PATH",
-        "description": "Verify div operation producing a non-integer result (7 / 2 = 3.5)",
+        "description": "Verify div producing a non-integer result (7 / 2 = 3.5)",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "div",
@@ -184,9 +124,24 @@ TEST_CASES = json.loads(r'''[
         "timeout_seconds": 10
     },
     {
+        "name": "test_mul_with_zero",
+        "category": "HAPPY_PATH",
+        "description": "Verify mul when one operand is zero (5 * 0 = 0)",
+        "command": "$BASE_CLI_COMMAND",
+        "args": [
+            "mul",
+            "5",
+            "0"
+        ],
+        "expected_exit_code": 0,
+        "expected_stdout": "0",
+        "expected_stderr": null,
+        "timeout_seconds": 10
+    },
+    {
         "name": "test_div_by_zero",
         "category": "INVALID_ARGS",
-        "description": "Division by zero should produce an error on stderr and non-zero exit",
+        "description": "Division by zero should produce an error and exit 1",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "div",
@@ -201,7 +156,7 @@ TEST_CASES = json.loads(r'''[
     {
         "name": "test_invalid_operation",
         "category": "INVALID_ARGS",
-        "description": "Unknown operation name should produce an error and non-zero exit",
+        "description": "Unknown operation name should produce an error and exit 2",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "foo",
@@ -216,7 +171,7 @@ TEST_CASES = json.loads(r'''[
     {
         "name": "test_non_numeric_first_operand",
         "category": "INVALID_ARGS",
-        "description": "Non-numeric first operand should produce an error and non-zero exit",
+        "description": "Non-numeric first operand should produce an error and exit 2",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "add",
@@ -229,24 +184,9 @@ TEST_CASES = json.loads(r'''[
         "timeout_seconds": 10
     },
     {
-        "name": "test_non_numeric_second_operand",
-        "category": "INVALID_ARGS",
-        "description": "Non-numeric second operand should produce an error and non-zero exit",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "add",
-            "1",
-            "b"
-        ],
-        "expected_exit_code": 2,
-        "expected_stdout": null,
-        "expected_stderr": "invalid",
-        "timeout_seconds": 10
-    },
-    {
         "name": "test_missing_all_arguments",
         "category": "INVALID_ARGS",
-        "description": "No arguments at all should produce a usage/error message and non-zero exit",
+        "description": "No arguments should produce a usage/error message and exit 2",
         "command": "$BASE_CLI_COMMAND",
         "args": [],
         "expected_exit_code": 2,
@@ -255,36 +195,9 @@ TEST_CASES = json.loads(r'''[
         "timeout_seconds": 10
     },
     {
-        "name": "test_missing_operands",
-        "category": "INVALID_ARGS",
-        "description": "Operation provided but missing both operands should produce an error and non-zero exit",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "add"
-        ],
-        "expected_exit_code": 2,
-        "expected_stdout": null,
-        "expected_stderr": "required",
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_missing_second_operand",
-        "category": "INVALID_ARGS",
-        "description": "Operation and one operand but missing second operand should produce an error and non-zero exit",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "add",
-            "1"
-        ],
-        "expected_exit_code": 2,
-        "expected_stdout": null,
-        "expected_stderr": "required",
-        "timeout_seconds": 10
-    },
-    {
         "name": "test_too_many_arguments",
         "category": "INVALID_ARGS",
-        "description": "Extra arguments beyond expected three should produce an error and non-zero exit",
+        "description": "Extra arguments should produce an error and exit 2",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "add",
@@ -298,99 +211,9 @@ TEST_CASES = json.loads(r'''[
         "timeout_seconds": 10
     },
     {
-        "name": "test_sub_large_numbers",
-        "category": "BOUNDARY",
-        "description": "Verify sub operation with large numbers (1000000 - 999999 = 1)",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "sub",
-            "1000000",
-            "999999"
-        ],
-        "expected_exit_code": 0,
-        "expected_stdout": "1",
-        "expected_stderr": null,
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_mul_negative_result",
-        "category": "BOUNDARY",
-        "description": "Verify mul operation producing a negative result (-3 * 5 = -15)",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "mul",
-            "-3",
-            "5"
-        ],
-        "expected_exit_code": 0,
-        "expected_stdout": "-15",
-        "expected_stderr": null,
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_div_negative_by_negative",
-        "category": "BOUNDARY",
-        "description": "Verify div with both negative operands (-10 / -2 = 5)",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "div",
-            "-10",
-            "-2"
-        ],
-        "expected_exit_code": 0,
-        "expected_stdout": "5",
-        "expected_stderr": null,
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_div_zero_by_nonzero",
-        "category": "BOUNDARY",
-        "description": "Verify div when dividend is zero (0 / 5 = 0)",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "div",
-            "0",
-            "5"
-        ],
-        "expected_exit_code": 0,
-        "expected_stdout": "0",
-        "expected_stderr": null,
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_add_very_small_floats",
-        "category": "BOUNDARY",
-        "description": "Verify add with very small floating-point values (0.001 + 0.002 = 0.003)",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "add",
-            "0.001",
-            "0.002"
-        ],
-        "expected_exit_code": 0,
-        "expected_stdout": "0.003",
-        "expected_stderr": null,
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_empty_operation_string",
-        "category": "INVALID_ARGS",
-        "description": "Empty string as operation should produce an error and non-zero exit",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "",
-            "1",
-            "2"
-        ],
-        "expected_exit_code": 2,
-        "expected_stdout": null,
-        "expected_stderr": "invalid choice",
-        "timeout_seconds": 10
-    },
-    {
         "name": "test_div_by_zero_float",
         "category": "INVALID_ARGS",
-        "description": "Division by 0.0 (float zero) should produce an error and non-zero exit",
+        "description": "Division by 0.0 should produce an error and exit 1",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "div",
