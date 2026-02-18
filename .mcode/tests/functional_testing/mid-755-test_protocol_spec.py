@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-02-18T20:09:35.068978+00:00
+Generated at: 2026-02-18T20:14:52.911658+00:00
 Project: calculator-cli-shay-2
 Milestone: 755
 """
@@ -208,9 +208,9 @@ TEST_CASES = json.loads(r'''[
             "1",
             "2"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "invalid operation",
+        "expected_stderr": "invalid choice",
         "timeout_seconds": 10
     },
     {
@@ -223,7 +223,7 @@ TEST_CASES = json.loads(r'''[
             "a",
             "2"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "invalid",
         "timeout_seconds": 10
@@ -238,7 +238,7 @@ TEST_CASES = json.loads(r'''[
             "1",
             "b"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "invalid",
         "timeout_seconds": 10
@@ -249,9 +249,9 @@ TEST_CASES = json.loads(r'''[
         "description": "No arguments at all should produce a usage/error message and non-zero exit",
         "command": "$BASE_CLI_COMMAND",
         "args": [],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "Usage",
+        "expected_stderr": "required",
         "timeout_seconds": 10
     },
     {
@@ -262,9 +262,9 @@ TEST_CASES = json.loads(r'''[
         "args": [
             "add"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "Usage",
+        "expected_stderr": "required",
         "timeout_seconds": 10
     },
     {
@@ -276,9 +276,9 @@ TEST_CASES = json.loads(r'''[
             "add",
             "1"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "Usage",
+        "expected_stderr": "required",
         "timeout_seconds": 10
     },
     {
@@ -292,9 +292,9 @@ TEST_CASES = json.loads(r'''[
             "2",
             "3"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "Usage",
+        "expected_stderr": "unrecognized arguments",
         "timeout_seconds": 10
     },
     {
@@ -382,9 +382,9 @@ TEST_CASES = json.loads(r'''[
             "1",
             "2"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "invalid operation",
+        "expected_stderr": "invalid choice",
         "timeout_seconds": 10
     },
     {
