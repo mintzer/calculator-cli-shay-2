@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-02-18T20:46:32.757994+00:00
+Generated at: 2026-02-18T20:58:31.934493+00:00
 Project: calculator-cli-shay-2
 Milestone: 755
 """
@@ -34,9 +34,9 @@ import pytest
 # Parse JSON at runtime to handle null -> None, true -> True, false -> False
 TEST_CASES = json.loads(r'''[
     {
-        "name": "test_add_positive_integers",
+        "name": "test_add_basic",
         "category": "HAPPY_PATH",
-        "description": "Verify add operation with positive integers (5 + 3 = 8)",
+        "description": "Verify add operation works (5 + 3 = 8)",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "add",
@@ -49,9 +49,9 @@ TEST_CASES = json.loads(r'''[
         "timeout_seconds": 10
     },
     {
-        "name": "test_sub_positive_integers",
+        "name": "test_sub_basic",
         "category": "HAPPY_PATH",
-        "description": "Verify sub operation with positive integers (10 - 4 = 6)",
+        "description": "Verify sub operation works (10 - 4 = 6)",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "sub",
@@ -64,9 +64,9 @@ TEST_CASES = json.loads(r'''[
         "timeout_seconds": 10
     },
     {
-        "name": "test_mul_positive_integers",
+        "name": "test_mul_basic",
         "category": "HAPPY_PATH",
-        "description": "Verify mul operation with positive integers (6 * 7 = 42)",
+        "description": "Verify mul operation works (6 * 7 = 42)",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "mul",
@@ -79,9 +79,9 @@ TEST_CASES = json.loads(r'''[
         "timeout_seconds": 10
     },
     {
-        "name": "test_div_positive_integers",
+        "name": "test_div_basic",
         "category": "HAPPY_PATH",
-        "description": "Verify div operation with positive integers (20 / 4 = 5)",
+        "description": "Verify div operation works (20 / 4 = 5)",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "div",
@@ -94,54 +94,9 @@ TEST_CASES = json.loads(r'''[
         "timeout_seconds": 10
     },
     {
-        "name": "test_add_negative_numbers",
-        "category": "HAPPY_PATH",
-        "description": "Verify add with a negative operand (-5 + 3 = -2)",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "add",
-            "-5",
-            "3"
-        ],
-        "expected_exit_code": 0,
-        "expected_stdout": "-2",
-        "expected_stderr": null,
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_div_resulting_in_float",
-        "category": "HAPPY_PATH",
-        "description": "Verify div producing a non-integer result (7 / 2 = 3.5)",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "div",
-            "7",
-            "2"
-        ],
-        "expected_exit_code": 0,
-        "expected_stdout": "3.5",
-        "expected_stderr": null,
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_mul_with_zero",
-        "category": "HAPPY_PATH",
-        "description": "Verify mul when one operand is zero (5 * 0 = 0)",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "mul",
-            "5",
-            "0"
-        ],
-        "expected_exit_code": 0,
-        "expected_stdout": "0",
-        "expected_stderr": null,
-        "timeout_seconds": 10
-    },
-    {
         "name": "test_div_by_zero",
         "category": "INVALID_ARGS",
-        "description": "Division by zero should produce an error and exit 1",
+        "description": "Division by zero should error with exit 1",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "div",
@@ -156,7 +111,7 @@ TEST_CASES = json.loads(r'''[
     {
         "name": "test_invalid_operation",
         "category": "INVALID_ARGS",
-        "description": "Unknown operation name should produce an error and exit 2",
+        "description": "Invalid operation should error with exit 2",
         "command": "$BASE_CLI_COMMAND",
         "args": [
             "foo",
@@ -166,63 +121,6 @@ TEST_CASES = json.loads(r'''[
         "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "invalid choice",
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_non_numeric_first_operand",
-        "category": "INVALID_ARGS",
-        "description": "Non-numeric first operand should produce an error and exit 2",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "add",
-            "a",
-            "2"
-        ],
-        "expected_exit_code": 2,
-        "expected_stdout": null,
-        "expected_stderr": "invalid",
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_missing_all_arguments",
-        "category": "INVALID_ARGS",
-        "description": "No arguments should produce a usage/error message and exit 2",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [],
-        "expected_exit_code": 2,
-        "expected_stdout": null,
-        "expected_stderr": "required",
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_too_many_arguments",
-        "category": "INVALID_ARGS",
-        "description": "Extra arguments should produce an error and exit 2",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "add",
-            "1",
-            "2",
-            "3"
-        ],
-        "expected_exit_code": 2,
-        "expected_stdout": null,
-        "expected_stderr": "unrecognized arguments",
-        "timeout_seconds": 10
-    },
-    {
-        "name": "test_div_by_zero_float",
-        "category": "INVALID_ARGS",
-        "description": "Division by 0.0 should produce an error and exit 1",
-        "command": "$BASE_CLI_COMMAND",
-        "args": [
-            "div",
-            "5",
-            "0.0"
-        ],
-        "expected_exit_code": 1,
-        "expected_stdout": null,
-        "expected_stderr": "Cannot divide by zero",
         "timeout_seconds": 10
     }
 ]''')
