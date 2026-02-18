@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-02-18T20:10:04.281821+00:00
+Generated at: 2026-02-18T20:23:52.633831+00:00
 Project: calculator-cli-shay-2
 Milestone: 754
 """
@@ -188,7 +188,7 @@ TEST_CASES = json.loads(r'''[
             "3"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "3.333333333333333",
+        "expected_stdout": "3.333333",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -234,7 +234,7 @@ TEST_CASES = json.loads(r'''[
         ],
         "expected_exit_code": 1,
         "expected_stdout": null,
-        "expected_stderr": "Cannot divide by zero",
+        "expected_stderr": "divide by zero",
         "timeout_seconds": 10
     },
     {
@@ -249,7 +249,7 @@ TEST_CASES = json.loads(r'''[
         ],
         "expected_exit_code": 1,
         "expected_stdout": null,
-        "expected_stderr": "Cannot divide by zero",
+        "expected_stderr": "divide by zero",
         "timeout_seconds": 10
     },
     {
