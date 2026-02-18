@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-02-18T20:58:31.934493+00:00
+Generated at: 2026-02-18T21:10:04.229051+00:00
 Project: calculator-cli-shay-2
 Milestone: 755
 """
@@ -425,8 +425,6 @@ def test_cli_command(test_case: dict[str, Any], cli_work_dir: Path) -> None:
     # Extract test case info
     name = test_case.get("name", "unnamed")
     command = test_case.get("command", CLI_COMMAND)
-    if command == "$BASE_CLI_COMMAND":
-        command = os.environ.get("BASE_CLI_COMMAND", CLI_COMMAND)
     args = test_case.get("args", [])
     stdin_input = test_case.get("stdin")
     env_vars = test_case.get("env", {})
