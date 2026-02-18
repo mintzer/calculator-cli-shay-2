@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-02-18T17:16:49.861645+00:00
+Generated at: 2026-02-18T17:19:48.798901+00:00
 Project: calculator-cli-shay-2
 Milestone: 736
 """
@@ -37,7 +37,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_help_output",
         "category": "HELP_OUTPUT",
         "description": "Verify --help shows usage information and exits successfully",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "--help"
         ],
@@ -50,7 +50,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_help_short_flag",
         "category": "HELP_OUTPUT",
         "description": "Verify -h also shows usage information and exits successfully",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "-h"
         ],
@@ -63,7 +63,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_add_integers",
         "category": "HAPPY_PATH",
         "description": "Add two positive integers",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "add",
             "5",
@@ -78,7 +78,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_sub_integers",
         "category": "HAPPY_PATH",
         "description": "Subtract two positive integers",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "sub",
             "10",
@@ -93,7 +93,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_mul_integers",
         "category": "HAPPY_PATH",
         "description": "Multiply two positive integers",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "mul",
             "6",
@@ -108,7 +108,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_div_integers",
         "category": "HAPPY_PATH",
         "description": "Divide two positive integers evenly",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "div",
             "20",
@@ -123,7 +123,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_add_decimals",
         "category": "HAPPY_PATH",
         "description": "Add two decimal numbers",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "add",
             "1.5",
@@ -138,7 +138,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_add_negative_numbers",
         "category": "HAPPY_PATH",
         "description": "Add with a negative number",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "add",
             "-5",
@@ -153,7 +153,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_sub_result_negative",
         "category": "HAPPY_PATH",
         "description": "Subtract resulting in a negative number",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "sub",
             "0",
@@ -168,7 +168,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_mul_by_zero",
         "category": "HAPPY_PATH",
         "description": "Multiply by zero should produce zero",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "mul",
             "0",
@@ -183,7 +183,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_div_zero_numerator",
         "category": "HAPPY_PATH",
         "description": "Divide zero by non-zero should produce zero",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "div",
             "0",
@@ -198,7 +198,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_div_non_even",
         "category": "HAPPY_PATH",
         "description": "Divide resulting in a non-integer decimal",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "div",
             "7",
@@ -213,7 +213,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_add_both_negative",
         "category": "HAPPY_PATH",
         "description": "Add two negative numbers",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "add",
             "-3",
@@ -228,7 +228,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_mul_negative_numbers",
         "category": "HAPPY_PATH",
         "description": "Multiply a negative and positive number",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "mul",
             "-3",
@@ -243,7 +243,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_div_by_zero",
         "category": "INVALID_ARGS",
         "description": "Division by zero should produce an error on stderr and exit 1",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "div",
             "1",
@@ -258,7 +258,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_div_zero_by_zero",
         "category": "INVALID_ARGS",
         "description": "Zero divided by zero should also produce a division by zero error",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "div",
             "0",
@@ -273,7 +273,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_invalid_operation",
         "category": "INVALID_ARGS",
         "description": "Unknown operation name should produce an error and exit non-zero",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "foo",
             "1",
@@ -288,7 +288,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_invalid_operation_modulo",
         "category": "INVALID_ARGS",
         "description": "Unsupported operation 'mod' should produce an error",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "mod",
             "10",
@@ -303,7 +303,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_non_numeric_first_operand",
         "category": "INVALID_ARGS",
         "description": "Non-numeric first operand should produce an error and exit non-zero",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "add",
             "abc",
@@ -318,7 +318,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_non_numeric_second_operand",
         "category": "INVALID_ARGS",
         "description": "Non-numeric second operand should produce an error and exit non-zero",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "add",
             "1",
@@ -333,7 +333,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_no_arguments",
         "category": "INVALID_ARGS",
         "description": "No arguments at all should produce a usage/error message and exit non-zero",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [],
         "expected_exit_code": 2,
         "expected_stdout": null,
@@ -344,7 +344,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_missing_operands",
         "category": "INVALID_ARGS",
         "description": "Operation given but both operands missing should produce an error",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "add"
         ],
@@ -357,7 +357,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_missing_second_operand",
         "category": "INVALID_ARGS",
         "description": "Operation and one operand given but second missing should produce an error",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "add",
             "1"
@@ -371,7 +371,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_too_many_arguments",
         "category": "INVALID_ARGS",
         "description": "More than three positional arguments should produce an error",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "add",
             "1",
@@ -387,7 +387,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_empty_string_operand",
         "category": "BOUNDARY",
         "description": "Empty string as operand should produce a parse error",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "add",
             "",
@@ -402,7 +402,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_very_large_numbers",
         "category": "BOUNDARY",
         "description": "Very large numbers should be handled correctly",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "add",
             "1e15",
@@ -417,7 +417,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_very_small_decimal",
         "category": "BOUNDARY",
         "description": "Very small decimal numbers should be handled correctly",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "add",
             "0.001",
@@ -432,7 +432,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_add_zero_zero",
         "category": "BOUNDARY",
         "description": "Adding zero and zero should produce zero",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "add",
             "0",
@@ -447,7 +447,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_sub_same_numbers",
         "category": "BOUNDARY",
         "description": "Subtracting a number from itself should produce zero",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "sub",
             "42",
@@ -462,7 +462,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_mul_by_one",
         "category": "BOUNDARY",
         "description": "Multiplying by one should return the other operand",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "mul",
             "7.5",
@@ -477,7 +477,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_div_by_one",
         "category": "BOUNDARY",
         "description": "Dividing by one should return the numerator",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "div",
             "9",
@@ -492,7 +492,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_scientific_notation_input",
         "category": "BOUNDARY",
         "description": "Scientific notation input should be parsed correctly",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "add",
             "1e10",
@@ -507,7 +507,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_negative_div_negative",
         "category": "BOUNDARY",
         "description": "Dividing two negative numbers should produce a positive result",
-        "command": ".venv/bin/calc",
+        "command": "calc",
         "args": [
             "div",
             "-10",
@@ -521,7 +521,7 @@ TEST_CASES = json.loads(r'''[
 ]''')
 
 # CLI binary/entry point
-CLI_COMMAND = ".venv/bin/calc"
+CLI_COMMAND = "calc"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
