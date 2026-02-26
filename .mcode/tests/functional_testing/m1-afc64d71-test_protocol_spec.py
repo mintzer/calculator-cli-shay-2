@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-02-26T22:06:34.050484+00:00
+Generated at: 2026-02-26T22:16:42.926580+00:00
 Project: calculator-cli-shay-local
 Milestone: 1
 """
@@ -310,7 +310,7 @@ TEST_CASES = json.loads(r'''[
             "1",
             "2"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "error",
         "timeout_seconds": 10
@@ -325,7 +325,7 @@ TEST_CASES = json.loads(r'''[
             "10",
             "3"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "error",
         "timeout_seconds": 10
@@ -337,7 +337,7 @@ TEST_CASES = json.loads(r'''[
         "command": "calc",
         "subcommand": "add",
         "args": [],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "error",
         "timeout_seconds": 10
@@ -351,7 +351,7 @@ TEST_CASES = json.loads(r'''[
         "args": [
             "1"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "error",
         "timeout_seconds": 10
@@ -363,7 +363,7 @@ TEST_CASES = json.loads(r'''[
         "command": "calc",
         "subcommand": "",
         "args": [],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "error",
         "timeout_seconds": 10
@@ -379,7 +379,7 @@ TEST_CASES = json.loads(r'''[
             "2",
             "3"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "error",
         "timeout_seconds": 10
@@ -394,7 +394,7 @@ TEST_CASES = json.loads(r'''[
             "abc",
             "2"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "error",
         "timeout_seconds": 10
@@ -409,7 +409,7 @@ TEST_CASES = json.loads(r'''[
             "5",
             "xyz"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "error",
         "timeout_seconds": 10
@@ -425,7 +425,7 @@ TEST_CASES = json.loads(r'''[
             "2e5"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "1.00002",
+        "expected_stdout": "10000200000",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -552,7 +552,7 @@ TEST_CASES = json.loads(r'''[
 ]''')
 
 # CLI binary/entry point
-CLI_COMMAND = "echo """
+CLI_COMMAND = "./calc"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
