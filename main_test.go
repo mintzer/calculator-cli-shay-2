@@ -171,11 +171,11 @@ func TestRunDivideByZero(t *testing.T) {
 
 func TestRunInvalidOperation(t *testing.T) {
 	stdout, stderr, exitCode := run([]string{"foo", "1", "2"})
-	if exitCode != 1 {
-		t.Errorf("exit code = %d, want 1", exitCode)
+	if exitCode != 2 {
+		t.Errorf("exit code = %d, want 2", exitCode)
 	}
-	if !strings.Contains(stderr, "unknown operation") {
-		t.Errorf("stderr = %q, want it to contain 'unknown operation'", stderr)
+	if !strings.Contains(stderr, "invalid choice: 'foo'") {
+		t.Errorf("stderr = %q, want it to contain \"invalid choice: 'foo'\"", stderr)
 	}
 	if stdout != "" {
 		t.Errorf("stdout = %q, want empty", stdout)
@@ -184,22 +184,23 @@ func TestRunInvalidOperation(t *testing.T) {
 
 func TestRunWrongArgCount(t *testing.T) {
 	tests := []struct {
-		name string
-		args []string
+		name        string
+		args        []string
+		wantContain string
 	}{
-		{"no args", []string{}},
-		{"one arg", []string{"add"}},
-		{"two args", []string{"add", "1"}},
-		{"four args", []string{"add", "1", "2", "3"}},
+		{"no args", []string{}, "the following arguments are required: operation, a, b"},
+		{"one arg", []string{"add"}, "the following arguments are required: a, b"},
+		{"two args", []string{"add", "1"}, "the following arguments are required: b"},
+		{"four args", []string{"add", "1", "2", "3"}, "unrecognized arguments: 3"},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			stdout, stderr, exitCode := run(tc.args)
-			if exitCode != 1 {
-				t.Errorf("run(%v) exit code = %d, want 1", tc.args, exitCode)
+			if exitCode != 2 {
+				t.Errorf("run(%v) exit code = %d, want 2", tc.args, exitCode)
 			}
-			if !strings.Contains(stderr, "expected exactly 3 arguments") {
-				t.Errorf("run(%v) stderr = %q, want it to contain 'expected exactly 3 arguments'", tc.args, stderr)
+			if !strings.Contains(stderr, tc.wantContain) {
+				t.Errorf("run(%v) stderr = %q, want it to contain %q", tc.args, stderr, tc.wantContain)
 			}
 			if stdout != "" {
 				t.Errorf("run(%v) stdout = %q, want empty", tc.args, stdout)
@@ -214,17 +215,14 @@ func TestRunNonNumericOperands(t *testing.T) {
 		args []string
 		bad  string
 	}{
-		{"first operand", []string{"add", "abc", "2"}, "abc"},
-		{"second operand", []string{"add", "2", "xyz"}, "xyz"},
+		{"first operand", []string{"add", "abc", "2"}, "argument a: invalid float value: 'abc'"},
+		{"second operand", []string{"add", "2", "xyz"}, "argument b: invalid float value: 'xyz'"},
 	}
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			stdout, stderr, exitCode := run(tc.args)
-			if exitCode != 1 {
-				t.Errorf("run(%v) exit code = %d, want 1", tc.args, exitCode)
-			}
-			if !strings.Contains(stderr, "invalid number") {
-				t.Errorf("run(%v) stderr = %q, want it to contain 'invalid number'", tc.args, stderr)
+			if exitCode != 2 {
+				t.Errorf("run(%v) exit code = %d, want 2", tc.args, exitCode)
 			}
 			if !strings.Contains(stderr, tc.bad) {
 				t.Errorf("run(%v) stderr = %q, want it to contain %q", tc.args, stderr, tc.bad)
@@ -241,8 +239,8 @@ func TestRunHelp(t *testing.T) {
 	if exitCode != 0 {
 		t.Errorf("exit code = %d, want 0", exitCode)
 	}
-	if !strings.Contains(stdout, "Usage: calc") {
-		t.Errorf("stdout = %q, want it to contain 'Usage: calc'", stdout)
+	if !strings.Contains(stdout, "usage: calc") {
+		t.Errorf("stdout = %q, want it to contain 'usage: calc'", stdout)
 	}
 	if !strings.Contains(stdout, "add") || !strings.Contains(stdout, "div") {
 		t.Errorf("stdout = %q, want it to list operations", stdout)
