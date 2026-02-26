@@ -9,7 +9,7 @@ This script supports two modes:
 1. SRC Validation: Tests commands and captures outputs (no expected_stdout/stderr)
 2. DST Contract Validation: Tests commands and validates outputs match expected
 
-Generated at: 2026-02-26T01:29:12.259788+00:00
+Generated at: 2026-02-26T01:42:14.049692+00:00
 Project: calculator-cli-shay-local
 Milestone: 1
 """
@@ -37,13 +37,13 @@ TEST_CASES = json.loads(r'''[
         "name": "test_help_short_flag",
         "category": "HELP_OUTPUT",
         "description": "Verify -h shows usage information and exits successfully",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "",
         "args": [
             "-h"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "Usage",
+        "expected_stdout": "usage",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -51,13 +51,13 @@ TEST_CASES = json.loads(r'''[
         "name": "test_help_long_flag",
         "category": "HELP_OUTPUT",
         "description": "Verify --help shows usage information and exits successfully",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "",
         "args": [
             "--help"
         ],
         "expected_exit_code": 0,
-        "expected_stdout": "Usage",
+        "expected_stdout": "usage",
         "expected_stderr": null,
         "timeout_seconds": 10
     },
@@ -65,7 +65,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_help_lists_operations",
         "category": "HELP_OUTPUT",
         "description": "Verify help output lists all four operations (add, sub, mul, div)",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "",
         "args": [
             "-h"
@@ -79,7 +79,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_add_positive_integers",
         "category": "HAPPY_PATH",
         "description": "Add two positive integers",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "add",
         "args": [
             "5",
@@ -94,7 +94,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_add_negative_and_positive",
         "category": "HAPPY_PATH",
         "description": "Add a negative and a positive number",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "add",
         "args": [
             "-1",
@@ -109,7 +109,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_add_two_negatives",
         "category": "HAPPY_PATH",
         "description": "Add two negative numbers",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "add",
         "args": [
             "-5",
@@ -124,7 +124,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_add_floats",
         "category": "HAPPY_PATH",
         "description": "Add two floating-point numbers",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "add",
         "args": [
             "1.5",
@@ -139,7 +139,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_sub_basic",
         "category": "HAPPY_PATH",
         "description": "Subtract two positive numbers with positive result",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "sub",
         "args": [
             "5",
@@ -154,7 +154,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_sub_negative_result",
         "category": "HAPPY_PATH",
         "description": "Subtract where result is negative",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "sub",
         "args": [
             "3",
@@ -169,7 +169,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_sub_equal_numbers",
         "category": "HAPPY_PATH",
         "description": "Subtract equal numbers yields zero",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "sub",
         "args": [
             "7",
@@ -184,7 +184,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_mul_basic",
         "category": "HAPPY_PATH",
         "description": "Multiply two positive numbers",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "mul",
         "args": [
             "5",
@@ -199,7 +199,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_mul_by_zero",
         "category": "HAPPY_PATH",
         "description": "Multiply by zero yields zero",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "mul",
         "args": [
             "5",
@@ -214,7 +214,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_mul_negative_numbers",
         "category": "HAPPY_PATH",
         "description": "Multiply a negative and positive number",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "mul",
         "args": [
             "-2",
@@ -229,7 +229,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_mul_two_negatives",
         "category": "HAPPY_PATH",
         "description": "Multiply two negative numbers yields positive",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "mul",
         "args": [
             "-4",
@@ -244,7 +244,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_div_basic",
         "category": "HAPPY_PATH",
         "description": "Divide two numbers evenly",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "div",
         "args": [
             "20",
@@ -259,7 +259,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_div_decimal_result",
         "category": "HAPPY_PATH",
         "description": "Divide with a non-integer result",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "div",
         "args": [
             "7",
@@ -274,7 +274,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_div_negative_dividend",
         "category": "HAPPY_PATH",
         "description": "Divide a negative number by a positive number",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "div",
         "args": [
             "-10",
@@ -289,7 +289,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_div_zero_dividend",
         "category": "HAPPY_PATH",
         "description": "Divide zero by a non-zero number yields zero",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "div",
         "args": [
             "0",
@@ -304,7 +304,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_div_by_zero",
         "category": "BOUNDARY",
         "description": "Division by zero produces error message on stderr and exits with code 1",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "div",
         "args": [
             "1",
@@ -319,7 +319,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_div_zero_by_zero",
         "category": "BOUNDARY",
         "description": "Division of zero by zero produces error message on stderr and exits with code 1",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "div",
         "args": [
             "0",
@@ -334,7 +334,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_div_negative_by_zero",
         "category": "BOUNDARY",
         "description": "Division of a negative number by zero produces error",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "div",
         "args": [
             "-5",
@@ -349,97 +349,97 @@ TEST_CASES = json.loads(r'''[
         "name": "test_no_args",
         "category": "INVALID_ARGS",
         "description": "Running calc with no arguments should produce an error and non-zero exit",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "",
         "args": [],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "Usage",
+        "expected_stderr": "error",
         "timeout_seconds": 10
     },
     {
         "name": "test_missing_both_operands",
         "category": "INVALID_ARGS",
         "description": "Running calc with only an operation and no operands should fail",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "add",
         "args": [],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "Usage",
+        "expected_stderr": "error",
         "timeout_seconds": 10
     },
     {
         "name": "test_missing_second_operand",
         "category": "INVALID_ARGS",
         "description": "Running calc with an operation and only one operand should fail",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "add",
         "args": [
             "1"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "Usage",
+        "expected_stderr": "error",
         "timeout_seconds": 10
     },
     {
         "name": "test_extra_arguments",
         "category": "INVALID_ARGS",
         "description": "Providing more than two operands should fail",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "add",
         "args": [
             "1",
             "2",
             "3"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "Usage",
+        "expected_stderr": "unrecognized arguments",
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_operation",
         "category": "INVALID_ARGS",
         "description": "Using an unknown operation should produce an error",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "foo",
         "args": [
             "1",
             "2"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "unknown operation",
+        "expected_stderr": "invalid choice",
         "timeout_seconds": 10
     },
     {
         "name": "test_invalid_operation_modulo",
         "category": "INVALID_ARGS",
         "description": "Using 'mod' which is not a supported operation should fail",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "mod",
         "args": [
             "10",
             "3"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "unknown operation",
+        "expected_stderr": "invalid choice",
         "timeout_seconds": 10
     },
     {
         "name": "test_non_numeric_first_operand",
         "category": "INVALID_ARGS",
         "description": "Non-numeric first operand should produce an error",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "add",
         "args": [
             "abc",
             "2"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "invalid",
         "timeout_seconds": 10
@@ -448,13 +448,13 @@ TEST_CASES = json.loads(r'''[
         "name": "test_non_numeric_second_operand",
         "category": "INVALID_ARGS",
         "description": "Non-numeric second operand should produce an error",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "add",
         "args": [
             "1",
             "xyz"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "invalid",
         "timeout_seconds": 10
@@ -463,13 +463,13 @@ TEST_CASES = json.loads(r'''[
         "name": "test_both_operands_non_numeric",
         "category": "INVALID_ARGS",
         "description": "Both operands being non-numeric should produce an error",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "mul",
         "args": [
             "foo",
             "bar"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "invalid",
         "timeout_seconds": 10
@@ -478,13 +478,13 @@ TEST_CASES = json.loads(r'''[
         "name": "test_empty_string_operand",
         "category": "INVALID_ARGS",
         "description": "Empty string as operand should produce an error",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "add",
         "args": [
             "",
             "2"
         ],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
         "expected_stderr": "invalid",
         "timeout_seconds": 10
@@ -493,35 +493,35 @@ TEST_CASES = json.loads(r'''[
         "name": "test_unknown_flag",
         "category": "INVALID_OPTIONS",
         "description": "Unknown flag should produce an error",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "",
         "args": [
             "--unknown"
         ],
         "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "flag provided but not defined",
+        "expected_stderr": "unrecognized arguments",
         "timeout_seconds": 10
     },
     {
         "name": "test_unknown_short_flag",
         "category": "INVALID_OPTIONS",
         "description": "Unknown short flag should produce an error",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "",
         "args": [
             "-x"
         ],
         "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "flag provided but not defined",
+        "expected_stderr": "unrecognized arguments",
         "timeout_seconds": 10
     },
     {
         "name": "test_add_large_numbers",
         "category": "BOUNDARY",
         "description": "Add two large numbers",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "add",
         "args": [
             "999999999",
@@ -536,7 +536,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_add_zeros",
         "category": "BOUNDARY",
         "description": "Add zero to zero yields zero",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "add",
         "args": [
             "0",
@@ -551,7 +551,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_mul_small_decimals",
         "category": "BOUNDARY",
         "description": "Multiply small decimal numbers",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "mul",
         "args": [
             "0.001",
@@ -566,7 +566,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_sub_large_result",
         "category": "BOUNDARY",
         "description": "Subtract producing a large result",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "sub",
         "args": [
             "1000000",
@@ -581,7 +581,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_div_result_many_decimals",
         "category": "BOUNDARY",
         "description": "Division producing a result with many decimal places",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "div",
         "args": [
             "1",
@@ -596,7 +596,7 @@ TEST_CASES = json.loads(r'''[
         "name": "test_add_very_small_positive",
         "category": "BOUNDARY",
         "description": "Add a very small positive number to zero",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "add",
         "args": [
             "0.0001",
@@ -611,18 +611,18 @@ TEST_CASES = json.loads(r'''[
         "name": "test_operation_only",
         "category": "INVALID_ARGS",
         "description": "Providing only the operation name with no numbers should fail",
-        "command": "calc",
+        "command": ".venv/bin/calc",
         "subcommand": "div",
         "args": [],
-        "expected_exit_code": 1,
+        "expected_exit_code": 2,
         "expected_stdout": null,
-        "expected_stderr": "Usage",
+        "expected_stderr": "error",
         "timeout_seconds": 10
     }
 ]''')
 
 # CLI binary/entry point
-CLI_COMMAND = "echo """
+CLI_COMMAND = ".venv/bin/calc"
 
 # Working directory for CLI execution
 WORKING_DIR = "."
