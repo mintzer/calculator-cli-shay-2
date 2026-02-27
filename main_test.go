@@ -173,11 +173,11 @@ func TestRunDivisionByZero(t *testing.T) {
 
 func TestRunInvalidOperation(t *testing.T) {
 	stdout, stderr, exitCode := run([]string{"foo", "1", "2"})
-	if exitCode != 1 {
-		t.Errorf("exitCode = %d; want 1", exitCode)
+	if exitCode != 2 {
+		t.Errorf("exitCode = %d; want 2", exitCode)
 	}
-	if !strings.Contains(stderr, "unknown operation") {
-		t.Errorf("stderr = %q; want it to contain %q", stderr, "unknown operation")
+	if !strings.Contains(stderr, "invalid choice") {
+		t.Errorf("stderr = %q; want it to contain %q", stderr, "invalid choice")
 	}
 	if stdout != "" {
 		t.Errorf("stdout = %q; want empty", stdout)
@@ -196,8 +196,8 @@ func TestRunWrongArgCount(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
 			stdout, stderr, exitCode := run(tc.args)
-			if exitCode != 1 {
-				t.Errorf("run(%v) exitCode = %d; want 1", tc.args, exitCode)
+			if exitCode != 2 {
+				t.Errorf("run(%v) exitCode = %d; want 2", tc.args, exitCode)
 			}
 			if stderr == "" {
 				t.Errorf("run(%v) stderr is empty; expected an error message", tc.args)
@@ -220,11 +220,11 @@ func TestRunNonNumericOperands(t *testing.T) {
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
 			stdout, stderr, exitCode := run(tc.args)
-			if exitCode != 1 {
-				t.Errorf("run(%v) exitCode = %d; want 1", tc.args, exitCode)
+			if exitCode != 2 {
+				t.Errorf("run(%v) exitCode = %d; want 2", tc.args, exitCode)
 			}
-			if !strings.Contains(stderr, "invalid number") {
-				t.Errorf("run(%v) stderr = %q; want it to contain %q", tc.args, stderr, "invalid number")
+			if !strings.Contains(stderr, "invalid float value") {
+				t.Errorf("run(%v) stderr = %q; want it to contain %q", tc.args, stderr, "invalid float value")
 			}
 			if stdout != "" {
 				t.Errorf("run(%v) stdout = %q; want empty", tc.args, stdout)
@@ -240,7 +240,7 @@ func TestRunHelp(t *testing.T) {
 			if exitCode != 0 {
 				t.Errorf("run(%q) exitCode = %d; want 0", flag, exitCode)
 			}
-			if !strings.Contains(stdout, "Usage:") {
+			if !strings.Contains(stdout, "usage:") {
 				t.Errorf("run(%q) stdout = %q; want it to contain usage text", flag, stdout)
 			}
 			if stderr != "" {

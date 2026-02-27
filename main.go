@@ -40,41 +40,84 @@ func formatResult(v float64) string {
 	return s
 }
 
-const usageText = `Usage: calc <operation> <number1> <number2>
+const usageLine = "usage: calc [-h] {add,sub,mul,div} a b"
 
-Operations:
-  add  Add two numbers
-  sub  Subtract the second number from the first
-  mul  Multiply two numbers
-  div  Divide the first number by the second
+const helpText = `usage: calc [-h] {add,sub,mul,div} a b
+
+Simple CLI Calculator
+
+positional arguments:
+  {add,sub,mul,div}  Operation to perform
+  a                  First number
+  b                  Second number
+
+options:
+  -h, --help         show this help message and exit
 `
+
+var validOps = map[string]bool{"add": true, "sub": true, "mul": true, "div": true}
 
 // run encapsulates the CLI logic and returns stdout, stderr content, and an
 // exit code. This design keeps main() thin and makes integration testing
 // straightforward.
 func run(args []string) (stdout string, stderr string, exitCode int) {
-	if len(args) == 1 && (args[0] == "-h" || args[0] == "--help") {
-		return usageText, "", 0
+	// Check for help flags anywhere in args (matching argparse behavior)
+	for _, arg := range args {
+		if arg == "-h" || arg == "--help" {
+			return helpText, "", 0
+		}
 	}
 
-	if len(args) != 3 {
-		return "", "Error: expected 3 arguments: <operation> <number1> <number2>\n" + usageText, 1
+	// No arguments at all
+	if len(args) == 0 {
+		return "", usageLine + "\ncalc: error: the following arguments are required: operation, a, b\n", 2
 	}
 
 	operation := args[0]
-	aStr := args[1]
-	bStr := args[2]
+	remaining := args[1:]
 
-	a, err := strconv.ParseFloat(aStr, 64)
-	if err != nil {
-		return "", fmt.Sprintf("Error: invalid number %q\n", aStr), 1
+	// Unknown flags in operation position (argparse treats these as missing positional args)
+	if strings.HasPrefix(operation, "-") {
+		return "", usageLine + "\ncalc: error: the following arguments are required: operation, a, b\n", 2
 	}
 
-	b, err := strconv.ParseFloat(bStr, 64)
-	if err != nil {
-		return "", fmt.Sprintf("Error: invalid number %q\n", bStr), 1
+	// Validate operation
+	if !validOps[operation] {
+		return "", fmt.Sprintf("%s\ncalc: error: argument operation: invalid choice: '%s' (choose from add, sub, mul, div)\n", usageLine, operation), 2
 	}
 
+	// Check operand count
+	if len(remaining) == 0 {
+		return "", usageLine + "\ncalc: error: the following arguments are required: a, b\n", 2
+	}
+
+	if len(remaining) == 1 {
+		// Try to parse the first operand; if invalid, report that error first
+		// (matching argparse behavior which validates type before checking missing args)
+		_, err := strconv.ParseFloat(remaining[0], 64)
+		if err != nil {
+			return "", fmt.Sprintf("%s\ncalc: error: argument a: invalid float value: '%s'\n", usageLine, remaining[0]), 2
+		}
+		return "", usageLine + "\ncalc: error: the following arguments are required: b\n", 2
+	}
+
+	if len(remaining) > 2 {
+		extra := strings.Join(remaining[2:], " ")
+		return "", fmt.Sprintf("%s\ncalc: error: unrecognized arguments: %s\n", usageLine, extra), 2
+	}
+
+	// Parse operands
+	a, err := strconv.ParseFloat(remaining[0], 64)
+	if err != nil {
+		return "", fmt.Sprintf("%s\ncalc: error: argument a: invalid float value: '%s'\n", usageLine, remaining[0]), 2
+	}
+
+	b, err := strconv.ParseFloat(remaining[1], 64)
+	if err != nil {
+		return "", fmt.Sprintf("%s\ncalc: error: argument b: invalid float value: '%s'\n", usageLine, remaining[1]), 2
+	}
+
+	// Execute operation
 	var result float64
 
 	switch operation {
@@ -90,8 +133,6 @@ func run(args []string) (stdout string, stderr string, exitCode int) {
 			return "", fmt.Sprintf("Error: %s\n", divErr.Error()), 1
 		}
 		result = val
-	default:
-		return "", fmt.Sprintf("Error: unknown operation %q. Choose from: add, sub, mul, div\n", operation), 1
 	}
 
 	return formatResult(result) + "\n", "", 0
