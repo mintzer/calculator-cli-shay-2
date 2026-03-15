@@ -3,6 +3,7 @@
 
 import argparse
 import sys
+from collections.abc import Callable
 
 
 def add(a: float, b: float) -> float:
@@ -27,7 +28,7 @@ def divide(a: float, b: float) -> float:
     return a / b
 
 
-OPERATIONS: dict[str, callable] = {
+OPERATIONS: dict[str, Callable[[float, float], float]] = {
     "add": add,
     "sub": subtract,
     "mul": multiply,
