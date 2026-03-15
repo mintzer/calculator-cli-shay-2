@@ -1,8 +1,21 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
 name = "calculator-cli"
 version = "0.1.0"
 description = "A very simple CLI calculator"
-requires-python = ">=3.10"
+requires-python = ">=3.13"
 
 [project.scripts]
 calc = "calculator:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
